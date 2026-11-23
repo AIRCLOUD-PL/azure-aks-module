@@ -1,8 +1,14 @@
-# Azure Kubernetes Service (AKS) Module - Enterprise Edition
+<p align="center">
+  <a href="https://aircloud.com.pl"><img src=".github/assets/banner.png" alt="AIRCLOUD: DevOps, cloud and AI engineering" width="100%"></a>
+</p>
 
-[![CI/CD Pipeline](https://github.com/AIRCLOUD-PL/azure-aks-module/actions/workflows/ci.yml/badge.svg)](https://github.com/AIRCLOUD-PL/azure-aks-module/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Security](https://img.shields.io/badge/security-enabled-green.svg)](SECURITY.md)
+# azure-aks-module
+
+**Azure Kubernetes Service (AKS) Terraform module — parameterised, azurerm 4.x, CI-validated.**
+
+[![CI](https://github.com/AIRCLOUD-PL/azure-aks-module/actions/workflows/ci.yml/badge.svg)](https://github.com/AIRCLOUD-PL/azure-aks-module/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/AIRCLOUD-PL/azure-aks-module?sort=semver)](https://github.com/AIRCLOUD-PL/azure-aks-module/releases)
 
 This Terraform module creates an Azure Kubernetes Service (AKS) cluster with enterprise-grade security, networking, monitoring, compliance, and DevOps automation features. Designed for production workloads with comprehensive CI/CD, security scanning, and automated compliance validation.
 
@@ -58,6 +64,24 @@ This Terraform module creates an Azure Kubernetes Service (AKS) cluster with ent
 - **Audit Logging**: Comprehensive audit trails and compliance reporting
 
 ## 📖 Usage
+
+Pin the module to a release tag:
+
+```hcl
+module "aks" {
+  source = "git::https://github.com/AIRCLOUD-PL/azure-aks-module.git?ref=v1.0.0"
+
+  # required inputs
+  environment         = "..."
+  location            = "..."
+  location_short      = "..."
+  resource_group_name = "..."
+  vnet_id             = "..."
+  vnet_subnet_id      = "..."
+}
+```
+
+All inputs and outputs are listed in the generated reference below ([Inputs](#inputs), [Outputs](#outputs)). Worked examples live in [`examples/`](examples/).
 
 ### Basic Example
 
@@ -191,37 +215,6 @@ module "aks_advanced" {
 }
 ```
 
-## 🔧 Requirements
-
-| Name | Version |
-|------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 3.80.0 |
-
-## 📋 Inputs
-
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| <a name="input_name_prefix"></a> [name\_prefix](#input\_name\_prefix) | Prefix for resource names | `string` | `""` | no |
-| <a name="input_custom_name"></a> [custom\_name](#input\_custom\_name) | Custom name for the AKS cluster | `string` | `""` | no |
-| <a name="input_name_suffix"></a> [name\_suffix](#input\_name\_suffix) | Suffix for resource names | `string` | `""` | no |
-| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Name of the resource group | `string` | n/a | yes |
-| <a name="input_location"></a> [location](#input\_location) | Azure region | `string` | n/a | yes |
-| <a name="input_location_short"></a> [location\_short](#input\_location\_short) | Short name for location | `string` | n/a | yes |
-| <a name="input_environment"></a> [environment](#input\_environment) | Environment name | `string` | n/a | yes |
-| <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Project name | `string` | n/a | yes |
-| <a name="input_created_by"></a> [created\_by](#input\_created\_by) | Created by user | `string` | `"terraform"` | no |
-| <a name="input_additional_tags"></a> [additional\_tags](#input\_additional\_tags) | Additional tags | `map(string)` | `{}` | no |
-
-## 📤 Outputs
-
-| Name | Description |
-|------|-------------|
-| <a name="output_cluster_id"></a> [cluster\_id](#output\_cluster\_id) | AKS cluster ID |
-| <a name="output_cluster_name"></a> [cluster\_name](#output\_cluster\_name) | AKS cluster name |
-| <a name="output_kube_config"></a> [kube\_config](#output\_kube\_config) | Kubernetes configuration |
-| <a name="output_node_resource_group"></a> [node\_resource\_group](#output\_node\_resource\_group) | Node resource group name |
-
 ## 🧪 Testing
 
 This module includes comprehensive testing:
@@ -315,7 +308,7 @@ This module is licensed under the MIT License. See [LICENSE](LICENSE) for detail
 
 ```hcl
 module "aks" {
-  source = "./modules/compute/aks"
+  source = "git::https://github.com/AIRCLOUD-PL/azure-aks-module.git?ref=v1.0.0"
 
   resource_group_name = "rg-aks-basic"
   location            = "East US"
@@ -361,7 +354,7 @@ module "aks" {
 
 ```hcl
 module "aks_enterprise" {
-  source = "./modules/compute/aks"
+  source = "git::https://github.com/AIRCLOUD-PL/azure-aks-module.git?ref=v1.0.0"
 
   resource_group_name = "rg-aks-enterprise"
   location            = "East US"
@@ -463,126 +456,6 @@ module "aks_enterprise" {
 }
 ```
 
-## Requirements
-
-| Name | Version |
-|------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 3.80.0 |
-
-## Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 3.80.0 |
-
-## Modules
-
-No modules.
-
-## Resources
-
-| Name | Type |
-|------|------|
-| [azurerm_kubernetes_cluster.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster) | resource |
-| [azurerm_kubernetes_cluster_node_pool.additional](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster_node_pool) | resource |
-| [azurerm_monitor_diagnostic_setting.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting) | resource |
-| [azurerm_resource_group_policy_assignment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group_policy_assignment) | resource |
-| [azurerm_resource_group_policy_remediation.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group_policy_remediation) | resource |
-| [azurerm_management_lock.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/management_lock) | resource |
-
-## Inputs
-
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Name of the resource group | `string` | n/a | yes |
-| <a name="input_location"></a> [location](#input\_location) | Azure region for resources | `string` | n/a | yes |
-| <a name="input_location_short"></a> [location\_short](#input\_location\_short) | Short name for the location (e.g., 'eus' for East US) | `string` | n/a | yes |
-| <a name="input_environment"></a> [environment](#input\_environment) | Environment name (e.g., 'dev', 'test', 'prod') | `string` | n/a | yes |
-| <a name="input_custom_name"></a> [custom\_name](#input\_custom\_name) | Custom name for the AKS cluster | `string` | n/a | yes |
-| <a name="input_vnet_id"></a> [vnet\_id](#input\_vnet\_id) | ID of the Virtual Network | `string` | n/a | yes |
-| <a name="input_vnet_subnet_id"></a> [vnet\_subnet\_id](#input\_vnet\_subnet\_id) | ID of the subnet for AKS nodes | `string` | n/a | yes |
-| <a name="input_kubernetes_version"></a> [kubernetes\_version](#input\_kubernetes\_version) | Kubernetes version for the cluster | `string` | `"1.27.3"` | no |
-| <a name="input_sku_tier"></a> [sku\_tier](#input\_sku\_tier) | SKU tier for the cluster (Free or Standard) | `string` | `"Free"` | no |
-| <a name="input_enable_private_cluster"></a> [enable\_private\_cluster](#input\_enable\_private\_cluster) | Enable private cluster | `bool` | `false` | no |
-| <a name="input_enable_api_server_authorized_ip_ranges"></a> [enable\_api\_server\_authorized\_ip\_ranges](#input\_enable\_api\_server\_authorized\_ip\_ranges) | Enable authorized IP ranges for API server | `bool` | `false` | no |
-| <a name="input_api_server_authorized_ip_ranges"></a> [api\_server\_authorized\_ip\_ranges](#input\_api\_server\_authorized\_ip\_ranges) | List of authorized IP ranges for API server access | `list(string)` | `[]` | no |
-| <a name="input_enable_managed_identity"></a> [enable\_managed\_identity](#input\_enable\_managed\_identity) | Enable managed identity for the cluster | `bool` | `true` | no |
-| <a name="input_user_assigned_identity_id"></a> [user\_assigned\_identity\_id](#input\_user\_assigned\_identity\_id) | ID of user-assigned managed identity | `string` | `null` | no |
-| <a name="input_default_node_pool_vm_size"></a> [default\_node\_pool\_vm\_size](#input\_default\_node\_pool\_vm\_size) | VM size for default node pool | `string` | `"Standard_DS2_v2"` | no |
-| <a name="input_default_node_pool_node_count"></a> [default\_node\_pool\_node\_count](#input\_default\_node\_pool\_node\_count) | Number of nodes in default node pool | `number` | `1` | no |
-| <a name="input_enable_auto_scaling"></a> [enable\_auto\_scaling](#input\_enable\_auto\_scaling) | Enable auto-scaling for default node pool | `bool` | `false` | no |
-| <a name="input_default_node_pool_min_count"></a> [default\_node\_pool\_min\_count](#input\_default\_node\_pool\_min\_count) | Minimum node count for auto-scaling | `number` | `1` | no |
-| <a name="input_default_node_pool_max_count"></a> [default\_node\_pool\_max\_count](#input\_default\_node\_pool\_max\_count) | Maximum node count for auto-scaling | `number` | `3` | no |
-| <a name="input_default_node_pool_os_disk_size_gb"></a> [default\_node\_pool\_os\_disk\_size\_gb](#input\_default\_node\_pool\_os\_disk\_size\_gb) | OS disk size in GB for default node pool | `number` | `128` | no |
-| <a name="input_additional_node_pools"></a> [additional\_node\_pools](#input\_additional\_node\_pools) | Map of additional node pools | `any` | `{}` | no |
-| <a name="input_enable_azure_cni"></a> [enable\_azure\_cni](#input\_enable\_azure\_cni) | Enable Azure CNI networking | `bool` | `true` | no |
-| <a name="input_enable_network_policy"></a> [enable\_network\_policy](#input\_enable\_network\_policy) | Enable network policy | `bool` | `false` | no |
-| <a name="input_network_policy"></a> [network\_policy](#input\_network\_policy) | Network policy to use (azure or calico) | `string` | `"azure"` | no |
-| <a name="input_dns_service_ip"></a> [dns\_service\_ip](#input\_dns\_service\_ip) | IP address for DNS service | `string` | `"10.0.0.10"` | no |
-| <a name="input_service_cidr"></a> [service\_cidr](#input\_service\_cidr) | CIDR for service IP addresses | `string` | `"10.0.0.0/16"` | no |
-| <a name="input_load_balancer_sku"></a> [load\_balancer\_sku](#input\_load\_balancer\_sku) | SKU for load balancer (basic or standard) | `string` | `"standard"` | no |
-| <a name="input_enable_aad_rbac"></a> [enable\_aad\_rbac](#input\_enable\_aad\_rbac) | Enable Azure AD RBAC | `bool` | `false` | no |
-| <a name="input_enable_azure_rbac"></a> [enable\_azure\_rbac](#input\_enable\_azure\_rbac) | Enable Azure RBAC | `bool` | `false` | no |
-| <a name="input_aad_admin_group_object_ids"></a> [aad\_admin\_group\_object\_ids](#input\_aad\_admin\_group\_object\_ids) | Object IDs of AAD groups for cluster admin | `list(string)` | `[]` | no |
-| <a name="input_enable_oidc_issuer"></a> [enable\_oidc\_issuer](#input\_enable\_oidc\_issuer) | Enable OIDC issuer | `bool` | `true` | no |
-| <a name="input_enable_workload_identity"></a> [enable\_workload\_identity](#input\_enable\_workload\_identity) | Enable workload identity | `bool` | `true` | no |
-| <a name="input_enable_key_vault_secrets_provider"></a> [enable\_key\_vault\_secrets\_provider](#input\_enable\_key\_vault\_secrets\_provider) | Enable Key Vault secrets provider | `bool` | `false` | no |
-| <a name="input_key_vault_secrets_provider"></a> [key\_vault\_secrets\_provider](#input\_key\_vault\_secrets\_provider) | Configuration for Key Vault secrets provider | `any` | `{}` | no |
-| <a name="input_key_vault_secrets_provider_key_vault_key_version"></a> [key\_vault\_secrets\_provider\_key\_vault\_key\_version](#input\_key\_vault\_secrets\_provider\_key\_vault\_key\_version) | Key version for Key Vault secrets provider | `string` | `null` | no |
-| <a name="input_key_vault_secrets_provider_key_vault_secret_version"></a> [key\_vault\_secrets\_provider\_key\_vault\_secret\_version](#input\_key\_vault\_secrets\_provider\_key\_vault\_secret\_version) | Secret version for Key Vault secrets provider | `string` | `null` | no |
-| <a name="input_enable_azure_monitor"></a> [enable\_azure\_monitor](#input\_enable\_azure\_monitor) | Enable Azure Monitor for containers | `bool` | `false` | no |
-| <a name="input_enable_log_analytics"></a> [enable\_log\_analytics](#input\_enable\_log\_analytics) | Enable Log Analytics integration | `bool` | `false` | no |
-| <a name="input_log_analytics_workspace_id"></a> [log\_analytics\_workspace\_id](#input\_log\_analytics\_workspace\_id) | ID of Log Analytics workspace | `string` | `null` | no |
-| <a name="input_enable_diagnostic_settings"></a> [enable\_diagnostic\_settings](#input\_enable\_diagnostic\_settings) | Enable diagnostic settings | `bool` | `false` | no |
-| <a name="input_diagnostic_settings"></a> [diagnostic\_settings](#input\_diagnostic\_settings) | Configuration for diagnostic settings | `any` | `{}` | no |
-| <a name="input_enable_auto_upgrade"></a> [enable\_auto\_upgrade](#input\_enable\_auto\_upgrade) | Enable automatic upgrades | `bool` | `false` | no |
-| <a name="input_auto_upgrade_profile"></a> [auto\_upgrade\_profile](#input\_auto\_upgrade\_profile) | Configuration for auto-upgrade profile | `any` | `{}` | no |
-| <a name="input_enable_maintenance_window"></a> [enable\_maintenance\_window](#input\_enable\_maintenance\_window) | Enable maintenance window | `bool` | `false` | no |
-| <a name="input_maintenance_window"></a> [maintenance\_window](#input\_maintenance\_window) | Configuration for maintenance window | `any` | `{}` | no |
-| <a name="input_enable_http_proxy"></a> [enable\_http\_proxy](#input\_enable\_http\_proxy) | Enable HTTP proxy | `bool` | `false` | no |
-| <a name="input_http_proxy_config"></a> [http\_proxy\_config](#input\_http\_proxy\_config) | Configuration for HTTP proxy | `any` | `{}` | no |
-| <a name="input_enable_ingress_application_gateway"></a> [enable\_ingress\_application\_gateway](#input\_enable\_ingress\_application\_gateway) | Enable Application Gateway ingress | `bool` | `false` | no |
-| <a name="input_ingress_application_gateway"></a> [ingress\_application\_gateway](#input\_ingress\_application\_gateway) | Configuration for Application Gateway ingress | `any` | `{}` | no |
-| <a name="input_enable_service_mesh"></a> [enable\_service\_mesh](#input\_enable\_service\_mesh) | Enable service mesh | `bool` | `false` | no |
-| <a name="input_service_mesh_profile"></a> [service\_mesh\_profile](#input\_service\_mesh\_profile) | Configuration for service mesh profile | `any` | `{}` | no |
-| <a name="input_enable_policy_assignments"></a> [enable\_policy\_assignments](#input\_enable\_policy\_assignments) | Enable Azure Policy assignments | `bool` | `false` | no |
-| <a name="input_enable_custom_policies"></a> [enable\_custom\_policies](#input\_enable\_custom\_policies) | Enable custom policy assignments | `bool` | `false` | no |
-| <a name="input_enable_policy_initiative"></a> [enable\_policy\_initiative](#input\_enable\_policy\_initiative) | Enable policy initiative assignment | `bool` | `false` | no |
-| <a name="input_policy_initiative_id"></a> [policy\_initiative\_id](#input\_policy\_initiative\_id) | ID of the policy initiative to assign | `string` | `null` | no |
-| <a name="input_enable_resource_lock"></a> [enable\_resource\_lock](#input\_enable\_resource\_lock) | Enable resource lock | `bool` | `false` | no |
-| <a name="input_lock_level"></a> [lock\_level](#input\_lock\_level) | Level of resource lock (CanNotDelete or ReadOnly) | `string` | `"CanNotDelete"` | no |
-| <a name="input_tags"></a> [tags](#input\_tags) | Additional tags for resources | `map(string)` | `{}` | no |
-
-## Outputs
-
-| Name | Description |
-|------|-------------|
-| <a name="output_aks_cluster_id"></a> [aks\_cluster\_id](#output\_aks\_cluster\_id) | ID of the AKS cluster |
-| <a name="output_aks_cluster_name"></a> [aks\_cluster\_name](#output\_aks\_cluster\_name) | Name of the AKS cluster |
-| <a name="output_aks_kube_config_raw"></a> [aks\_kube\_config\_raw](#output\_aks\_kube\_config\_raw) | Raw Kubernetes configuration |
-| <a name="output_aks_oidc_issuer_url"></a> [aks\_oidc\_issuer\_url](#output\_aks\_oidc\_issuer\_url) | OIDC issuer URL |
-| <a name="output_aks_identity"></a> [aks\_identity](#output\_aks\_identity) | Identity configuration of the AKS cluster |
-| <a name="output_aks_network_profile"></a> [aks\_network\_profile](#output\_aks\_network\_profile) | Network profile of the AKS cluster |
-| <a name="output_aks_default_node_pool"></a> [aks\_default\_node\_pool](#output\_aks\_default\_node\_pool) | Default node pool configuration |
-| <a name="output_aks_additional_node_pools"></a> [aks\_additional\_node\_pools](#output\_aks\_additional\_node\_pools) | Additional node pools configuration |
-| <a name="output_aks_workload_identity_enabled"></a> [aks\_workload\_identity\_enabled](#output\_aks\_workload\_identity\_enabled) | Whether workload identity is enabled |
-| <a name="output_aks_private_cluster_enabled"></a> [aks\_private\_cluster\_enabled](#output\_aks\_private\_cluster\_enabled) | Whether private cluster is enabled |
-| <a name="output_aks_aad_rbac_enabled"></a> [aks\_aad\_rbac\_enabled](#output\_aks\_aad\_rbac\_enabled) | Whether AAD RBAC is enabled |
-| <a name="output_aks_azure_rbac_enabled"></a> [aks\_azure\_rbac\_enabled](#output\_aks\_azure\_rbac\_enabled) | Whether Azure RBAC is enabled |
-| <a name="output_aks_key_vault_secrets_provider_enabled"></a> [aks\_key\_vault\_secrets\_provider\_enabled](#output\_aks\_key\_vault\_secrets\_provider\_enabled) | Whether Key Vault secrets provider is enabled |
-| <a name="output_aks_azure_monitor_enabled"></a> [aks\_azure\_monitor\_enabled](#output\_aks\_azure\_monitor\_enabled) | Whether Azure Monitor is enabled |
-| <a name="output_aks_auto_upgrade_enabled"></a> [aks\_auto\_upgrade\_enabled](#output\_aks\_auto\_upgrade\_enabled) | Whether auto-upgrade is enabled |
-| <a name="output_aks_maintenance_window_enabled"></a> [aks\_maintenance\_window\_enabled](#output\_aks\_maintenance\_window\_enabled) | Whether maintenance window is enabled |
-| <a name="output_aks_http_proxy_enabled"></a> [aks\_http\_proxy\_enabled](#output\_aks\_http\_proxy\_enabled) | Whether HTTP proxy is enabled |
-| <a name="output_aks_ingress_application_gateway_enabled"></a> [aks\_ingress\_application\_gateway\_enabled](#output\_aks\_ingress\_application\_gateway\_enabled) | Whether Application Gateway ingress is enabled |
-| <a name="output_aks_service_mesh_enabled"></a> [aks\_service\_mesh\_enabled](#output\_aks\_service\_mesh\_enabled) | Whether service mesh is enabled |
-| <a name="output_aks_policy_assignments_enabled"></a> [aks\_policy\_assignments\_enabled](#output\_aks\_policy\_assignments\_enabled) | Whether policy assignments are enabled |
-| <a name="output_aks_resource_lock_enabled"></a> [aks\_resource\_lock\_enabled](#output\_aks\_resource\_lock\_enabled) | Whether resource lock is enabled |
-| <a name="output_aks_resource_group_name"></a> [aks\_resource\_group\_name](#output\_aks\_resource\_group\_name) | Resource group name |
-| <a name="output_aks_location"></a> [aks\_location](#output\_aks\_location) | Azure region |
-| <a name="output_aks_tags"></a> [aks\_tags](#output\_aks\_tags) | Tags applied to resources |
-
 ## Testing
 
 The module includes comprehensive Terratest suites for validation:
@@ -641,13 +514,22 @@ go test -v -timeout 30m
 ## License
 
 This module is licensed under the MIT License.
+
+## Reference
+
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 4.0 |
 
 ## Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 4.81.0 |
 
 ## Modules
 
@@ -655,15 +537,184 @@ No modules.
 
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [azurerm_kubernetes_cluster.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster) | resource |
+| [azurerm_kubernetes_cluster_node_pool.additional](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster_node_pool) | resource |
+| [azurerm_log_analytics_workspace.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/log_analytics_workspace) | resource |
+| [azurerm_management_lock.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/management_lock) | resource |
+| [azurerm_monitor_diagnostic_setting.aks](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting) | resource |
+| [azurerm_policy_definition.aks_image_pull_secrets](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/policy_definition) | resource |
+| [azurerm_policy_definition.aks_pod_security_standards](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/policy_definition) | resource |
+| [azurerm_policy_definition.aks_resource_limits](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/policy_definition) | resource |
+| [azurerm_policy_set_definition.aks_security_initiative](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/policy_set_definition) | resource |
+| [azurerm_resource_group_policy_assignment.aks_authorized_ip_ranges](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group_policy_assignment) | resource |
+| [azurerm_resource_group_policy_assignment.aks_auto_upgrade](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group_policy_assignment) | resource |
+| [azurerm_resource_group_policy_assignment.aks_azure_cni_networking](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group_policy_assignment) | resource |
+| [azurerm_resource_group_policy_assignment.aks_azure_monitor](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group_policy_assignment) | resource |
+| [azurerm_resource_group_policy_assignment.aks_encryption_at_host](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group_policy_assignment) | resource |
+| [azurerm_resource_group_policy_assignment.aks_https_only](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group_policy_assignment) | resource |
+| [azurerm_resource_group_policy_assignment.aks_microsoft_defender](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group_policy_assignment) | resource |
+| [azurerm_resource_group_policy_assignment.aks_network_policy](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group_policy_assignment) | resource |
+| [azurerm_resource_group_policy_assignment.aks_os_and_data_disks_encrypted](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group_policy_assignment) | resource |
+| [azurerm_resource_group_policy_assignment.aks_private_clusters](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group_policy_assignment) | resource |
+| [azurerm_resource_group_policy_assignment.aks_security](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group_policy_assignment) | resource |
+| [azurerm_resource_group_policy_assignment.aks_security_initiative](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group_policy_assignment) | resource |
+| [azurerm_role_assignment.aks_identity_managed_identity_operator](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.aks_identity_network_contributor](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
+| [azurerm_user_assigned_identity.aks](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/user_assigned_identity) | resource |
+| [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
+| [azurerm_policy_definition.aks_authorized_ip_ranges](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/policy_definition) | data source |
+| [azurerm_policy_definition.aks_auto_upgrade](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/policy_definition) | data source |
+| [azurerm_policy_definition.aks_azure_cni_networking](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/policy_definition) | data source |
+| [azurerm_policy_definition.aks_azure_monitor](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/policy_definition) | data source |
+| [azurerm_policy_definition.aks_encryption_at_host](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/policy_definition) | data source |
+| [azurerm_policy_definition.aks_https_only](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/policy_definition) | data source |
+| [azurerm_policy_definition.aks_microsoft_defender](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/policy_definition) | data source |
+| [azurerm_policy_definition.aks_network_policy](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/policy_definition) | data source |
+| [azurerm_policy_definition.aks_os_and_data_disks_encrypted](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/policy_definition) | data source |
+| [azurerm_policy_definition.aks_private_clusters](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/policy_definition) | data source |
 
 ## Inputs
 
-No inputs.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_aad_admin_group_object_ids"></a> [aad\_admin\_group\_object\_ids](#input\_aad\_admin\_group\_object\_ids) | List of Azure AD group object IDs for cluster admins | `list(string)` | `[]` | no |
+| <a name="input_additional_node_pools"></a> [additional\_node\_pools](#input\_additional\_node\_pools) | Map of additional node pools to create | <pre>map(object({<br/>    name                = string<br/>    vm_size             = string<br/>    node_count          = number<br/>    min_count           = optional(number, 1)<br/>    max_count           = optional(number, 10)<br/>    enable_auto_scaling = optional(bool, true)<br/>    os_disk_size_gb     = optional(number, 128)<br/>    os_disk_type        = optional(string, "Managed")<br/>    vnet_subnet_id      = optional(string)<br/>    max_pods            = optional(number, 110)<br/>    node_labels         = optional(map(string), {})<br/>    node_taints         = optional(list(string), [])<br/>    tags                = optional(map(string), {})<br/>  }))</pre> | `{}` | no |
+| <a name="input_additional_tags"></a> [additional\_tags](#input\_additional\_tags) | Additional tags to add to resources | `map(string)` | `{}` | no |
+| <a name="input_api_server_authorized_ip_ranges"></a> [api\_server\_authorized\_ip\_ranges](#input\_api\_server\_authorized\_ip\_ranges) | List of authorized IP ranges for API server | `list(string)` | `[]` | no |
+| <a name="input_api_server_subnet_id"></a> [api\_server\_subnet\_id](#input\_api\_server\_subnet\_id) | Subnet ID for API server VNet integration | `string` | `null` | no |
+| <a name="input_created_by"></a> [created\_by](#input\_created\_by) | Identifier of who created this resource | `string` | `"terraform"` | no |
+| <a name="input_custom_name"></a> [custom\_name](#input\_custom\_name) | Custom name for the AKS cluster. If provided, name\_prefix and name\_suffix are ignored | `string` | `""` | no |
+| <a name="input_default_node_pool_labels"></a> [default\_node\_pool\_labels](#input\_default\_node\_pool\_labels) | Labels for the default node pool | `map(string)` | `{}` | no |
+| <a name="input_default_node_pool_max_count"></a> [default\_node\_pool\_max\_count](#input\_default\_node\_pool\_max\_count) | Maximum number of nodes in the default node pool | `number` | `10` | no |
+| <a name="input_default_node_pool_max_pods"></a> [default\_node\_pool\_max\_pods](#input\_default\_node\_pool\_max\_pods) | Maximum number of pods per node in the default node pool | `number` | `110` | no |
+| <a name="input_default_node_pool_min_count"></a> [default\_node\_pool\_min\_count](#input\_default\_node\_pool\_min\_count) | Minimum number of nodes in the default node pool | `number` | `1` | no |
+| <a name="input_default_node_pool_name"></a> [default\_node\_pool\_name](#input\_default\_node\_pool\_name) | Name of the default node pool | `string` | `"default"` | no |
+| <a name="input_default_node_pool_node_count"></a> [default\_node\_pool\_node\_count](#input\_default\_node\_pool\_node\_count) | Number of nodes in the default node pool | `number` | `3` | no |
+| <a name="input_default_node_pool_os_disk_size_gb"></a> [default\_node\_pool\_os\_disk\_size\_gb](#input\_default\_node\_pool\_os\_disk\_size\_gb) | OS disk size in GB for the default node pool | `number` | `128` | no |
+| <a name="input_default_node_pool_os_disk_type"></a> [default\_node\_pool\_os\_disk\_type](#input\_default\_node\_pool\_os\_disk\_type) | OS disk type for the default node pool | `string` | `"Managed"` | no |
+| <a name="input_default_node_pool_taints"></a> [default\_node\_pool\_taints](#input\_default\_node\_pool\_taints) | Taints for the default node pool | `list(string)` | `[]` | no |
+| <a name="input_default_node_pool_vm_size"></a> [default\_node\_pool\_vm\_size](#input\_default\_node\_pool\_vm\_size) | VM size for the default node pool | `string` | `"Standard_DS2_v2"` | no |
+| <a name="input_diagnostic_logs"></a> [diagnostic\_logs](#input\_diagnostic\_logs) | List of diagnostic logs to enable | `list(string)` | <pre>[<br/>  "kube-apiserver",<br/>  "kube-audit",<br/>  "kube-audit-admin",<br/>  "kube-controller-manager",<br/>  "kube-scheduler",<br/>  "cluster-autoscaler",<br/>  "guard"<br/>]</pre> | no |
+| <a name="input_diagnostic_metrics"></a> [diagnostic\_metrics](#input\_diagnostic\_metrics) | List of diagnostic metrics to enable | `list(string)` | <pre>[<br/>  "AllMetrics"<br/>]</pre> | no |
+| <a name="input_dns_prefix"></a> [dns\_prefix](#input\_dns\_prefix) | DNS prefix for the AKS cluster | `string` | `""` | no |
+| <a name="input_dns_service_ip"></a> [dns\_service\_ip](#input\_dns\_service\_ip) | IP address for the DNS service | `string` | `"10.0.0.10"` | no |
+| <a name="input_enable_aad_rbac"></a> [enable\_aad\_rbac](#input\_enable\_aad\_rbac) | Enable Azure AD RBAC for the cluster | `bool` | `true` | no |
+| <a name="input_enable_api_server_authorized_ip_ranges"></a> [enable\_api\_server\_authorized\_ip\_ranges](#input\_enable\_api\_server\_authorized\_ip\_ranges) | Enable authorized IP ranges for API server | `bool` | `true` | no |
+| <a name="input_enable_auto_scaling"></a> [enable\_auto\_scaling](#input\_enable\_auto\_scaling) | Enable auto-scaling for the default node pool | `bool` | `true` | no |
+| <a name="input_enable_auto_upgrade"></a> [enable\_auto\_upgrade](#input\_enable\_auto\_upgrade) | Enable automatic cluster upgrades | `bool` | `true` | no |
+| <a name="input_enable_azure_cni"></a> [enable\_azure\_cni](#input\_enable\_azure\_cni) | Enable Azure CNI networking | `bool` | `true` | no |
+| <a name="input_enable_azure_monitor"></a> [enable\_azure\_monitor](#input\_enable\_azure\_monitor) | Enable Azure Monitor for containers | `bool` | `true` | no |
+| <a name="input_enable_azure_rbac"></a> [enable\_azure\_rbac](#input\_enable\_azure\_rbac) | Enable Azure RBAC for Kubernetes authorization | `bool` | `true` | no |
+| <a name="input_enable_custom_policies"></a> [enable\_custom\_policies](#input\_enable\_custom\_policies) | Enable custom Azure Policy definitions | `bool` | `false` | no |
+| <a name="input_enable_diagnostic_settings"></a> [enable\_diagnostic\_settings](#input\_enable\_diagnostic\_settings) | Enable diagnostic settings | `bool` | `true` | no |
+| <a name="input_enable_http_proxy"></a> [enable\_http\_proxy](#input\_enable\_http\_proxy) | Enable HTTP proxy configuration | `bool` | `false` | no |
+| <a name="input_enable_ingress_application_gateway"></a> [enable\_ingress\_application\_gateway](#input\_enable\_ingress\_application\_gateway) | Enable Application Gateway ingress controller | `bool` | `false` | no |
+| <a name="input_enable_key_vault_secrets_provider"></a> [enable\_key\_vault\_secrets\_provider](#input\_enable\_key\_vault\_secrets\_provider) | Enable Key Vault secrets provider | `bool` | `true` | no |
+| <a name="input_enable_load_balancer_profile"></a> [enable\_load\_balancer\_profile](#input\_enable\_load\_balancer\_profile) | Enable load balancer profile | `bool` | `false` | no |
+| <a name="input_enable_log_analytics"></a> [enable\_log\_analytics](#input\_enable\_log\_analytics) | Enable Log Analytics workspace creation | `bool` | `true` | no |
+| <a name="input_enable_maintenance_window"></a> [enable\_maintenance\_window](#input\_enable\_maintenance\_window) | Enable maintenance window | `bool` | `false` | no |
+| <a name="input_enable_managed_identity"></a> [enable\_managed\_identity](#input\_enable\_managed\_identity) | Enable system-assigned managed identity | `bool` | `true` | no |
+| <a name="input_enable_network_policy"></a> [enable\_network\_policy](#input\_enable\_network\_policy) | Enable network policy | `bool` | `true` | no |
+| <a name="input_enable_oidc_issuer"></a> [enable\_oidc\_issuer](#input\_enable\_oidc\_issuer) | Enable OIDC issuer | `bool` | `true` | no |
+| <a name="input_enable_policy_assignments"></a> [enable\_policy\_assignments](#input\_enable\_policy\_assignments) | Enable Azure Policy assignments | `bool` | `true` | no |
+| <a name="input_enable_policy_initiative"></a> [enable\_policy\_initiative](#input\_enable\_policy\_initiative) | Enable Azure Policy initiative for AKS security | `bool` | `true` | no |
+| <a name="input_enable_private_cluster"></a> [enable\_private\_cluster](#input\_enable\_private\_cluster) | Enable private cluster | `bool` | `true` | no |
+| <a name="input_enable_resource_lock"></a> [enable\_resource\_lock](#input\_enable\_resource\_lock) | Enable resource lock for the AKS cluster | `bool` | `true` | no |
+| <a name="input_enable_service_mesh"></a> [enable\_service\_mesh](#input\_enable\_service\_mesh) | Enable service mesh | `bool` | `false` | no |
+| <a name="input_enable_workload_identity"></a> [enable\_workload\_identity](#input\_enable\_workload\_identity) | Enable workload identity | `bool` | `true` | no |
+| <a name="input_environment"></a> [environment](#input\_environment) | Environment name (dev, test, prod, etc.) | `string` | n/a | yes |
+| <a name="input_http_proxy_trusted_ca"></a> [http\_proxy\_trusted\_ca](#input\_http\_proxy\_trusted\_ca) | Trusted CA for HTTP proxy | `string` | `""` | no |
+| <a name="input_http_proxy_url"></a> [http\_proxy\_url](#input\_http\_proxy\_url) | HTTP proxy URL | `string` | `""` | no |
+| <a name="input_https_proxy_url"></a> [https\_proxy\_url](#input\_https\_proxy\_url) | HTTPS proxy URL | `string` | `""` | no |
+| <a name="input_ingress_application_gateway_id"></a> [ingress\_application\_gateway\_id](#input\_ingress\_application\_gateway\_id) | Existing Application Gateway ID | `string` | `null` | no |
+| <a name="input_ingress_application_gateway_name"></a> [ingress\_application\_gateway\_name](#input\_ingress\_application\_gateway\_name) | Name for new Application Gateway | `string` | `null` | no |
+| <a name="input_ingress_application_gateway_subnet_cidr"></a> [ingress\_application\_gateway\_subnet\_cidr](#input\_ingress\_application\_gateway\_subnet\_cidr) | Subnet CIDR for Application Gateway | `string` | `null` | no |
+| <a name="input_ingress_application_gateway_subnet_id"></a> [ingress\_application\_gateway\_subnet\_id](#input\_ingress\_application\_gateway\_subnet\_id) | Existing subnet ID for Application Gateway | `string` | `null` | no |
+| <a name="input_key_vault_secret_rotation_enabled"></a> [key\_vault\_secret\_rotation\_enabled](#input\_key\_vault\_secret\_rotation\_enabled) | Enable secret rotation for Key Vault provider | `bool` | `true` | no |
+| <a name="input_key_vault_secret_rotation_interval"></a> [key\_vault\_secret\_rotation\_interval](#input\_key\_vault\_secret\_rotation\_interval) | Secret rotation interval | `string` | `"2m"` | no |
+| <a name="input_kubernetes_version"></a> [kubernetes\_version](#input\_kubernetes\_version) | Kubernetes version for the AKS cluster | `string` | `"1.27.3"` | no |
+| <a name="input_load_balancer_sku"></a> [load\_balancer\_sku](#input\_load\_balancer\_sku) | SKU for the load balancer | `string` | `"standard"` | no |
+| <a name="input_location"></a> [location](#input\_location) | Azure region for the AKS cluster | `string` | n/a | yes |
+| <a name="input_location_short"></a> [location\_short](#input\_location\_short) | Short name for the location (e.g., 'eus' for East US) | `string` | n/a | yes |
+| <a name="input_log_analytics_retention_days"></a> [log\_analytics\_retention\_days](#input\_log\_analytics\_retention\_days) | Retention period for Log Analytics data | `number` | `30` | no |
+| <a name="input_log_analytics_sku"></a> [log\_analytics\_sku](#input\_log\_analytics\_sku) | SKU for Log Analytics workspace | `string` | `"PerGB2018"` | no |
+| <a name="input_log_analytics_workspace_id"></a> [log\_analytics\_workspace\_id](#input\_log\_analytics\_workspace\_id) | Existing Log Analytics workspace ID | `string` | `null` | no |
+| <a name="input_maintenance_window_allowed"></a> [maintenance\_window\_allowed](#input\_maintenance\_window\_allowed) | List of allowed maintenance windows | <pre>list(object({<br/>    day   = string<br/>    hours = list(number)<br/>  }))</pre> | `[]` | no |
+| <a name="input_maintenance_window_not_allowed"></a> [maintenance\_window\_not\_allowed](#input\_maintenance\_window\_not\_allowed) | List of not allowed maintenance windows | <pre>list(object({<br/>    start = string<br/>    end   = string<br/>  }))</pre> | `[]` | no |
+| <a name="input_managed_outbound_ip_count"></a> [managed\_outbound\_ip\_count](#input\_managed\_outbound\_ip\_count) | Number of managed outbound IPs | `number` | `1` | no |
+| <a name="input_name_prefix"></a> [name\_prefix](#input\_name\_prefix) | Prefix for resource naming. If empty, defaults to 'aks-{environment}-{location\_short}' | `string` | `""` | no |
+| <a name="input_name_suffix"></a> [name\_suffix](#input\_name\_suffix) | Suffix for resource naming | `string` | `""` | no |
+| <a name="input_no_proxy_list"></a> [no\_proxy\_list](#input\_no\_proxy\_list) | List of addresses to exclude from proxy | `list(string)` | `[]` | no |
+| <a name="input_node_resource_group"></a> [node\_resource\_group](#input\_node\_resource\_group) | Resource group for cluster nodes. If empty, defaults to {resource\_group\_name}-aks-nodes | `string` | `""` | no |
+| <a name="input_outbound_ip_address_ids"></a> [outbound\_ip\_address\_ids](#input\_outbound\_ip\_address\_ids) | List of outbound IP address IDs | `list(string)` | `[]` | no |
+| <a name="input_outbound_ip_prefix_ids"></a> [outbound\_ip\_prefix\_ids](#input\_outbound\_ip\_prefix\_ids) | List of outbound IP prefix IDs | `list(string)` | `[]` | no |
+| <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Name of the project | `string` | `"enterprise"` | no |
+| <a name="input_resource_group_id"></a> [resource\_group\_id](#input\_resource\_group\_id) | Resource group ID for policy assignments | `string` | `null` | no |
+| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Name of the resource group | `string` | n/a | yes |
+| <a name="input_resource_lock_level"></a> [resource\_lock\_level](#input\_resource\_lock\_level) | Level of the resource lock | `string` | `"CanNotDelete"` | no |
+| <a name="input_service_cidr"></a> [service\_cidr](#input\_service\_cidr) | CIDR for the service network | `string` | `"10.0.0.0/16"` | no |
+| <a name="input_service_mesh_mode"></a> [service\_mesh\_mode](#input\_service\_mesh\_mode) | Service mesh mode | `string` | `"Istio"` | no |
+| <a name="input_sku_tier"></a> [sku\_tier](#input\_sku\_tier) | SKU tier for the AKS cluster (Free or Paid) | `string` | `"Free"` | no |
+| <a name="input_upgrade_channel"></a> [upgrade\_channel](#input\_upgrade\_channel) | Upgrade channel for automatic upgrades | `string` | `"stable"` | no |
+| <a name="input_upgrade_max_surge"></a> [upgrade\_max\_surge](#input\_upgrade\_max\_surge) | Maximum surge for upgrades | `string` | `"10%"` | no |
+| <a name="input_vnet_id"></a> [vnet\_id](#input\_vnet\_id) | Virtual network ID for the AKS cluster | `string` | n/a | yes |
+| <a name="input_vnet_subnet_id"></a> [vnet\_subnet\_id](#input\_vnet\_subnet\_id) | Subnet ID for the AKS cluster nodes | `string` | n/a | yes |
 
 ## Outputs
 
-No outputs.
-
-<!-- BEGIN_TF_DOCS -->
+| Name | Description |
+|------|-------------|
+| <a name="output_aks_aad_rbac_enabled"></a> [aks\_aad\_rbac\_enabled](#output\_aks\_aad\_rbac\_enabled) | Whether Azure AD RBAC is enabled |
+| <a name="output_aks_additional_node_pools"></a> [aks\_additional\_node\_pools](#output\_aks\_additional\_node\_pools) | Map of additional node pools created |
+| <a name="output_aks_api_server_authorized_ip_ranges"></a> [aks\_api\_server\_authorized\_ip\_ranges](#output\_aks\_api\_server\_authorized\_ip\_ranges) | The authorized IP ranges for API server access |
+| <a name="output_aks_auto_scaling_enabled"></a> [aks\_auto\_scaling\_enabled](#output\_aks\_auto\_scaling\_enabled) | Whether auto-scaling is enabled for the default node pool |
+| <a name="output_aks_auto_upgrade_enabled"></a> [aks\_auto\_upgrade\_enabled](#output\_aks\_auto\_upgrade\_enabled) | Whether auto-upgrade is enabled |
+| <a name="output_aks_azure_monitor_enabled"></a> [aks\_azure\_monitor\_enabled](#output\_aks\_azure\_monitor\_enabled) | Whether Azure Monitor is enabled |
+| <a name="output_aks_azure_rbac_enabled"></a> [aks\_azure\_rbac\_enabled](#output\_aks\_azure\_rbac\_enabled) | Whether Azure RBAC is enabled |
+| <a name="output_aks_client_certificate"></a> [aks\_client\_certificate](#output\_aks\_client\_certificate) | The client certificate for the AKS cluster |
+| <a name="output_aks_client_key"></a> [aks\_client\_key](#output\_aks\_client\_key) | The client key for the AKS cluster |
+| <a name="output_aks_cluster_ca_certificate"></a> [aks\_cluster\_ca\_certificate](#output\_aks\_cluster\_ca\_certificate) | The cluster CA certificate for the AKS cluster |
+| <a name="output_aks_cluster_fqdn"></a> [aks\_cluster\_fqdn](#output\_aks\_cluster\_fqdn) | The FQDN of the AKS cluster |
+| <a name="output_aks_cluster_id"></a> [aks\_cluster\_id](#output\_aks\_cluster\_id) | The ID of the AKS cluster |
+| <a name="output_aks_cluster_name"></a> [aks\_cluster\_name](#output\_aks\_cluster\_name) | The name of the AKS cluster |
+| <a name="output_aks_cluster_portal_fqdn"></a> [aks\_cluster\_portal\_fqdn](#output\_aks\_cluster\_portal\_fqdn) | The portal FQDN of the AKS cluster |
+| <a name="output_aks_cluster_private_fqdn"></a> [aks\_cluster\_private\_fqdn](#output\_aks\_cluster\_private\_fqdn) | The private FQDN of the AKS cluster |
+| <a name="output_aks_default_node_pool"></a> [aks\_default\_node\_pool](#output\_aks\_default\_node\_pool) | The default node pool configuration |
+| <a name="output_aks_diagnostic_setting_id"></a> [aks\_diagnostic\_setting\_id](#output\_aks\_diagnostic\_setting\_id) | The ID of the diagnostic setting |
+| <a name="output_aks_host"></a> [aks\_host](#output\_aks\_host) | The Kubernetes cluster server host |
+| <a name="output_aks_http_proxy_enabled"></a> [aks\_http\_proxy\_enabled](#output\_aks\_http\_proxy\_enabled) | Whether HTTP proxy is enabled |
+| <a name="output_aks_identity"></a> [aks\_identity](#output\_aks\_identity) | The identity configuration of the AKS cluster |
+| <a name="output_aks_ingress_application_gateway_enabled"></a> [aks\_ingress\_application\_gateway\_enabled](#output\_aks\_ingress\_application\_gateway\_enabled) | Whether Application Gateway ingress is enabled |
+| <a name="output_aks_key_vault_secrets_provider_enabled"></a> [aks\_key\_vault\_secrets\_provider\_enabled](#output\_aks\_key\_vault\_secrets\_provider\_enabled) | Whether Key Vault secrets provider is enabled |
+| <a name="output_aks_kube_config"></a> [aks\_kube\_config](#output\_aks\_kube\_config) | The kubeconfig for the AKS cluster |
+| <a name="output_aks_kube_config_raw"></a> [aks\_kube\_config\_raw](#output\_aks\_kube\_config\_raw) | The raw kubeconfig for the AKS cluster |
+| <a name="output_aks_kubernetes_version"></a> [aks\_kubernetes\_version](#output\_aks\_kubernetes\_version) | The Kubernetes version of the AKS cluster |
+| <a name="output_aks_location"></a> [aks\_location](#output\_aks\_location) | The location of the AKS cluster |
+| <a name="output_aks_log_analytics_workspace_id"></a> [aks\_log\_analytics\_workspace\_id](#output\_aks\_log\_analytics\_workspace\_id) | The ID of the Log Analytics workspace |
+| <a name="output_aks_log_analytics_workspace_name"></a> [aks\_log\_analytics\_workspace\_name](#output\_aks\_log\_analytics\_workspace\_name) | The name of the Log Analytics workspace |
+| <a name="output_aks_maintenance_window_enabled"></a> [aks\_maintenance\_window\_enabled](#output\_aks\_maintenance\_window\_enabled) | Whether maintenance window is enabled |
+| <a name="output_aks_network_policy_enabled"></a> [aks\_network\_policy\_enabled](#output\_aks\_network\_policy\_enabled) | Whether network policy is enabled |
+| <a name="output_aks_network_profile"></a> [aks\_network\_profile](#output\_aks\_network\_profile) | The network profile of the AKS cluster |
+| <a name="output_aks_node_resource_group"></a> [aks\_node\_resource\_group](#output\_aks\_node\_resource\_group) | The resource group containing the AKS cluster nodes |
+| <a name="output_aks_oidc_issuer_url"></a> [aks\_oidc\_issuer\_url](#output\_aks\_oidc\_issuer\_url) | The OIDC issuer URL of the AKS cluster |
+| <a name="output_aks_policy_assignment_id"></a> [aks\_policy\_assignment\_id](#output\_aks\_policy\_assignment\_id) | The ID of the Azure Policy assignment |
+| <a name="output_aks_private_cluster_enabled"></a> [aks\_private\_cluster\_enabled](#output\_aks\_private\_cluster\_enabled) | Whether the AKS cluster is private |
+| <a name="output_aks_resource_group_name"></a> [aks\_resource\_group\_name](#output\_aks\_resource\_group\_name) | The resource group name of the AKS cluster |
+| <a name="output_aks_resource_lock_id"></a> [aks\_resource\_lock\_id](#output\_aks\_resource\_lock\_id) | The ID of the resource lock |
+| <a name="output_aks_service_mesh_enabled"></a> [aks\_service\_mesh\_enabled](#output\_aks\_service\_mesh\_enabled) | Whether service mesh is enabled |
+| <a name="output_aks_sku_tier"></a> [aks\_sku\_tier](#output\_aks\_sku\_tier) | The SKU tier of the AKS cluster |
+| <a name="output_aks_tags"></a> [aks\_tags](#output\_aks\_tags) | Tags applied to the AKS cluster |
+| <a name="output_aks_upgrade_channel"></a> [aks\_upgrade\_channel](#output\_aks\_upgrade\_channel) | The upgrade channel for the AKS cluster |
+| <a name="output_aks_user_assigned_identity_client_id"></a> [aks\_user\_assigned\_identity\_client\_id](#output\_aks\_user\_assigned\_identity\_client\_id) | The client ID of the user-assigned identity |
+| <a name="output_aks_user_assigned_identity_id"></a> [aks\_user\_assigned\_identity\_id](#output\_aks\_user\_assigned\_identity\_id) | The ID of the user-assigned identity |
+| <a name="output_aks_user_assigned_identity_principal_id"></a> [aks\_user\_assigned\_identity\_principal\_id](#output\_aks\_user\_assigned\_identity\_principal\_id) | The principal ID of the user-assigned identity |
+| <a name="output_aks_workload_identity_enabled"></a> [aks\_workload\_identity\_enabled](#output\_aks\_workload\_identity\_enabled) | Whether workload identity is enabled |
 <!-- END_TF_DOCS -->
+
+---
+
+## Part of the AIRCLOUD Azure module catalog
+
+Browse all modules with usage snippets in the [module catalog](https://aircloud-pl.github.io/) or on [github.com/AIRCLOUD-PL](https://github.com/AIRCLOUD-PL). Built and maintained by [AIRCLOUD](https://aircloud.com.pl): DevOps, cloud and AI engineering. Need a hand with Azure landing zones or platform engineering? See [aircloud.com.pl/consulting](https://aircloud.com.pl/consulting).
