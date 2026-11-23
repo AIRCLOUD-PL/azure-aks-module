@@ -23,21 +23,21 @@ resource "azurerm_resource_group" "test" {
 # Use the AKS module
 module "aks" {
   source = "../"
-  
+
   cluster_name        = var.cluster_name
   location            = var.location
   resource_group_name = azurerm_resource_group.test.name
   dns_prefix          = var.dns_prefix
   kubernetes_version  = var.kubernetes_version
-  
+
   node_pools = var.node_pools
-  
+
   enable_private_cluster = var.enable_private_cluster
-  network_plugin        = var.network_plugin
-  network_policy        = var.network_policy
-  sku_tier             = var.sku_tier
-  enable_rbac          = var.enable_rbac
-  azure_policy_enabled = var.azure_policy_enabled
+  network_plugin         = var.network_plugin
+  network_policy         = var.network_policy
+  sku_tier               = var.sku_tier
+  enable_rbac            = var.enable_rbac
+  azure_policy_enabled   = var.azure_policy_enabled
 }
 
 # Variables

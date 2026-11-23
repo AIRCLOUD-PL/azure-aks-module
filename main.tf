@@ -114,18 +114,18 @@ resource "azurerm_kubernetes_cluster" "this" {
 
   # Default node pool
   default_node_pool {
-    name            = local.default_node_pool.name
-    vm_size         = local.default_node_pool.vm_size
-    node_count      = local.default_node_pool.enable_auto_scaling ? null : local.default_node_pool.node_count
-    min_count       = local.default_node_pool.enable_auto_scaling ? local.default_node_pool.min_count : null
-    max_count       = local.default_node_pool.enable_auto_scaling ? local.default_node_pool.max_count : null
+    name                 = local.default_node_pool.name
+    vm_size              = local.default_node_pool.vm_size
+    node_count           = local.default_node_pool.enable_auto_scaling ? null : local.default_node_pool.node_count
+    min_count            = local.default_node_pool.enable_auto_scaling ? local.default_node_pool.min_count : null
+    max_count            = local.default_node_pool.enable_auto_scaling ? local.default_node_pool.max_count : null
     auto_scaling_enabled = local.default_node_pool.enable_auto_scaling
-    os_disk_size_gb = local.default_node_pool.os_disk_size_gb
-    os_disk_type    = local.default_node_pool.os_disk_type
-    vnet_subnet_id  = local.default_node_pool.vnet_subnet_id
-    max_pods        = local.default_node_pool.max_pods
-    node_labels     = local.default_node_pool.node_labels
-    tags            = local.default_node_pool.tags
+    os_disk_size_gb      = local.default_node_pool.os_disk_size_gb
+    os_disk_type         = local.default_node_pool.os_disk_type
+    vnet_subnet_id       = local.default_node_pool.vnet_subnet_id
+    max_pods             = local.default_node_pool.max_pods
+    node_labels          = local.default_node_pool.node_labels
+    tags                 = local.default_node_pool.tags
 
     dynamic "upgrade_settings" {
       for_each = var.enable_auto_upgrade ? [1] : []
@@ -158,7 +158,7 @@ resource "azurerm_kubernetes_cluster" "this" {
     for_each = var.enable_private_cluster || var.enable_api_server_authorized_ip_ranges ? [1] : []
     content {
       authorized_ip_ranges = local.api_server_authorized_ip_ranges
-      subnet_id           = var.api_server_subnet_id
+      subnet_id            = var.api_server_subnet_id
     }
   }
 

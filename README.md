@@ -1,7 +1,6 @@
 # Azure Kubernetes Service (AKS) Module - Enterprise Edition
 
 [![CI/CD Pipeline](https://github.com/AIRCLOUD-PL/azure-aks-module/actions/workflows/ci.yml/badge.svg)](https://github.com/AIRCLOUD-PL/azure-aks-module/actions/workflows/ci.yml)
-[![Terraform Registry](https://img.shields.io/badge/terraform-registry-blue.svg)](https://registry.terraform.io/modules/AIRCLOUD-PL/aks/azurerm/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Security](https://img.shields.io/badge/security-enabled-green.svg)](SECURITY.md)
 
@@ -291,7 +290,6 @@ terraform fmt -recursive
 
 ## 📚 Documentation
 
-- [Terraform Registry](https://registry.terraform.io/modules/AIRCLOUD-PL/aks/azurerm/latest)
 - [Azure AKS Documentation](https://docs.microsoft.com/en-us/azure/aks/)
 - [Terraform Azure Provider](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
 
